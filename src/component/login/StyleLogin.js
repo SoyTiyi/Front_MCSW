@@ -31,3 +31,7 @@ export const Button = styled.button`
     margin: 10px 15px;
     border-radius: 10px;
 `;
+
+export const Title = styled.div`
+    text-align: center;
+`;

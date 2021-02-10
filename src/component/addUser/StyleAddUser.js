@@ -12,18 +12,21 @@ export const Container = styled.div`
 `;
 
 export const Row = styled.div`
-  diplay: flex;
-  justify-content: space-between;
+  display: block;
   margin: 10px 15px;
-  padding: 10px 15px;
+  padding: 15px 15px;
 `;
 
 export const Button = styled.button`
-  color: #00b4d8;
-  border: 1px solid #00b4d8;
-  border-radius: 10px;
-  padding 10px 15px;
-  background-color: #00b4d8;
+  background-color: #0096c7;
   color: white;
+  padding: 10px 15px;
+  border: 1px solid #0096c7;
+  margin: 10px 15px;
+  border-radius: 10px;
   float: right;
+`;
+
+export const Title = styled.div`
+    text-align: center;
 `;

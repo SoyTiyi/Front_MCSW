@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-import { Container, Row, Button } from './StyleAddUser';
+import { Container, Row, Button , Title} from './StyleAddUser';
 
 
 const AddUser = () => {
@@ -27,6 +27,9 @@ const AddUser = () => {
 
     return (
         <Container>
+            <Title>
+                <h1>Add New User</h1>
+            </Title>
             <Row>
                 <label>Nombre: </label>
                 <input type="text" id="nombre" onChange={event => setNombre(event.target.value)}/>
