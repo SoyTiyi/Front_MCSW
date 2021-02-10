@@ -1,9 +1,10 @@
 import React from 'react';
-import { Container, Title, RowPage, CartDetails, RowData, P } from './StyleUserAcount';
+import { Container, Title, RowPage } from './StyleUserAcount';
 import InfoUser from './infoUser/InfoUser';
 import MyTransferences from './miTransferences/MyTransferences';
 
 const UserAcount = props => {
+    console.log("entre");
     return (
         <Container>
             <Title>

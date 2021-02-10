@@ -1,5 +1,4 @@
 import React from 'react';
-import AuxiliarComponent from '../../../hoc/AuxiliarComponent';
 import { Container, Table } from './StyleMyTransferences';
 const MyTransferences = props => {
     return (

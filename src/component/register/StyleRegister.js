@@ -17,7 +17,7 @@ export const Row = styled.div`
     padding: 15px 15px;
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
     background-color: #0096c7;
     color: white;
     padding: 10px 15px;
