@@ -8,26 +8,29 @@ const Transference = () => {
     const [monto, setMonto] = useState("");
     const [banco, setBanco] = useState("");
 
+    let response = <p></p>;
+
     const postTransaction = () => {
+
         axios.post('http://localhost:8000/trans.php/transaction/new', {
             destino: destino,
             origen: origen,
             saldo: monto,
             banco_destino: banco
+        }).then(response => {
+            console.log(response)
+            response = <p>Transacción Realizada</p>;
+            /* Falta implementar que pasa despues */
+        }).catch(error => {
+            console.log(`Error: ${error}`);
         })
-            .then(response => {
-                console.log(response)
-                /* Falta implementar que pasa despues */
-            })
-            .catch(error => {
-                console.log(`Error: ${error}`);
-            })
     }
 
     return (
         <Container>
             <Title>
                 <h1>Transference</h1>
+                {response}
             </Title>
             <Row>
                 <label>Destino:  </label>
@@ -42,10 +45,10 @@ const Transference = () => {
                 <input type="text" id="monto" onChange={event => setMonto(event.target.value)} />
             </Row>
             <Row>
-                <label>Origen:  </label>
+                <label>Banco Destino:  </label>
                 <input type="text" id="origen" onChange={event => setBanco(event.target.value)} />
             </Row>
-            <Button>Enviar</Button>
+            <Button onClick={postTransaction}>Enviar</Button>
         </Container>
 
     );
