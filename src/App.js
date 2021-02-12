@@ -6,6 +6,7 @@ import AddUser from './component/addUser/AddUser';
 import Transference from './component/transference/Transference';
 import AllTransferences from './component/allTransferences/AllTransferences';
 import ModifyMoney from './component/modifyMoney/ModifyMoney';
+import Sobregiro from './component/sobregiro/Sobregiro';
 import {Switch,Route} from 'react-router-dom';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Route path="/newTransference" component={Transference}/>
       <Route path="/allTransference" component={AllTransferences}/>
       <Route path="/changeAmount" component={ModifyMoney}/>
+      <Route path="/Sobregiro" component={Sobregiro}/>
     </Switch>
   );
 }

@@ -8,7 +8,10 @@ const AllTransferences = () => {
     const url = "http://localhost:8000/trans.php/specific";
 
     const getTransaccionByDocument = () => {
-        axios.post(url, {cuenta: document})
+        fetch(url, {
+            method: "post",
+            body: {cuenta: document}
+        })
             .then(response => {
                 console.log(response);
             })
@@ -41,6 +44,7 @@ const AllTransferences = () => {
 
     return (
         <Container>
+            <label>Cuenta</label>
             <input type="text" id="documento" placeholder="1234567" onChange={event => setDocument(event.target.value)} />
             <Button onClick={clickButton}>Show</Button>
             <Table>

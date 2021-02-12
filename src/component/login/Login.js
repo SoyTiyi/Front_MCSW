@@ -16,6 +16,7 @@ const Login = (props) => {
     const[password, setPassword] = useState("");
 
     const postLogin = () => {
+        console.log(username,password);
         axios.post('http://localhost:8000/login.php', {
             usuario: username,
             passwd: password
@@ -44,7 +45,7 @@ const Login = (props) => {
                 <input type="password" name="pasword" onChange={event => setPassword(event.target.value)}/>
             </Row>
             <Buttons>
-                <Button>Login</Button>
+                <Button onClick={postLogin}>Login</Button>
                 <Button onClick={routeChange}>Register</Button>
             </Buttons>
         </Container>

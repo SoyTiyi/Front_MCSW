@@ -8,11 +8,10 @@ const Register = () => {
     const history = useHistory();
     const post = () => {
         console.log("Click", documento);
-        axios.post('http://localhost:8000/user.php/clients/valid', documento)
+        axios.post('http://localhost:8000/user.php/clients/valid', {'documento': documento})
             .then(response => {
                 console.log(response);
                 if (response.data !== false) {
-                    console.log(response, "Entre");
                     let path = '/summary'
                     history.push(path);
                 }
