@@ -7,7 +7,10 @@ import Transference from './component/transference/Transference';
 import AllSuccesfullTransferences from './component/allTransferences/AllTransferences';
 import ModifyMoney from './component/modifyMoney/ModifyMoney';
 import Sobregiro from './component/sobregiro/Sobregiro';
+import UpdateSobregiro from './component/updateSobregiro/UpdateSobregiro';
 import AllTransferences from './component/oficialAllTransference/OficialAllTransference';
+import ConsultSobregiro from './component/consultSobregiro/ConsultSobregiro';
+import CrearSobregiro from './component/crearSobregiro/CrearSobregiro';
 import {Switch,Route} from 'react-router-dom';
 
 function App() {
@@ -21,7 +24,10 @@ function App() {
       <Route path="/allSuccesfulTransference" component={AllSuccesfullTransferences}/>
       <Route path="/allTransference" component={AllTransferences}/>
       <Route path="/changeAmount" component={ModifyMoney}/>
-      <Route path="/sobregiro" component={Sobregiro}/>
+      <Route path="/overdraft" component={Sobregiro}/>
+      <Route path="/updateOverdraft" component={UpdateSobregiro}/>
+      <Route path="/consultOverdraft" component={ConsultSobregiro}/>
+      <Route path="/createOverdraft" component={CrearSobregiro}/>
     </Switch>
   );
 }

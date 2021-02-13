@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Title, RowPage } from './StyleUserAcount';
-import InfoUser from './infoUser/InfoUser';
-import MyTransferences from './miTransferences/MyTransferences';
+import { Title } from './StyleUserAcount';
 import { Container, Button, Row } from '../login/StyleLogin';
 import axios from 'axios';
 
