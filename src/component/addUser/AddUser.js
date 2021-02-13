@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'
-import { Container, Row, Button , Title} from './StyleAddUser';
+import { Container, Row, Button, Title } from './StyleAddUser';
 
 
 const AddUser = () => {
@@ -12,45 +12,47 @@ const AddUser = () => {
 
 
     const postAddUser = props => {
-        axios.post('http://localhost:8000/user.php/clients/add',{
+        axios.post('http://localhost:8000/user.php/clients/add', {
             documento: document,
             nombre: nombre,
             usuario: usuario,
             passwd: password,
-            tipp: tipo
+            tipo: tipo
         })
-        .then(response => {
-            console.log(response);
-            console.log('datos',document,password,usuario,nombre,tipo);
-        }).catch(error => console.log(`Error: ${error}`));
+            .then(response => {
+                console.log(response);
+                console.log('datos', document, password, usuario, nombre, tipo);
+            }).catch(error => console.log(`Error: ${error}`));
     }
 
     return (
         <Container>
-            <Title>
-                <h1>Add New User</h1>
-            </Title>
-            <Row>
-                <label>Nombre: </label>
-                <input type="text" id="nombre" onChange={event => setNombre(event.target.value)}/>
-            </Row>
-            <Row>
-                <label>Usuario: </label>
-                <input type="text" id="usuario" onChange={event => setUsuario(event.target.value)}/>
-            </Row>
-            <Row>
-                <label>Documento: </label>
-                <input type="text" id="documento" onChange={event => setDocument(event.target.value)}/>
-            </Row>
-            <Row>
-                <label>Tipo: </label>
-                <input type="text" id="tipo" onChange={event => setTipo(event.target.value)}/>
-            </Row>
-            <Row>
-                <label>Contraseña: </label>
-                <input type="password" id="contraseña" onChange={event => setPassword(event.target.value)}/>
-            </Row>
-            <Button onClick={postAddUser}>Create</Button>
+            <form action="http://localhost:8000/user.php/clients/add" method="post">
+                <Title>
+                    <h1>Add New User</h1>
+                </Title>
+                <Row>
+                    <label>Nombre: </label>
+                    <input type="text" name="nombre"/>
+                </Row>
+                <Row>
+                    <label>Usuario: </label>
+                    <input type="text" name="usuario"/>
+                </Row>
+                <Row>
+                    <label>Documento: </label>
+                    <input type="text" name="documento"/>
+                </Row>
+                <Row>
+                    <label>Tipo: </label>
+                    <input type="text" name="tipo"/>
+                </Row>
+                <Row>
+                    <label>Contraseña: </label>
+                    <input type="password" name="passwd"/>
+                </Row>
+                <Button type="submit">Create</Button>
+            </form>
         </Container>
     );
 }
