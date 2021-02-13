@@ -36,7 +36,7 @@ const Login = (props) => {
               let rol = response.data.trim();
 
               if(rol === 'admin') {
-                let path = '/overdraft';
+                let path = '/updateOverdraft';
                 history.push(path);
               }
 
