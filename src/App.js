@@ -11,6 +11,8 @@ import UpdateSobregiro from './component/updateSobregiro/UpdateSobregiro';
 import AllTransferences from './component/oficialAllTransference/OficialAllTransference';
 import ConsultSobregiro from './component/consultSobregiro/ConsultSobregiro';
 import CrearSobregiro from './component/crearSobregiro/CrearSobregiro';
+import UserView from './component/Views/UserView';
+import AdminView from './component/Views/AdminView';
 import {Switch,Route} from 'react-router-dom';
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
       <Route path="/updateOverdraft" component={UpdateSobregiro}/>
       <Route path="/consultOverdraft" component={ConsultSobregiro}/>
       <Route path="/createOverdraft" component={CrearSobregiro}/>
+      <Route path="/user" component={UserView}/>
+      <Route path="/admin" component={AdminView}/>
     </Switch>
   );
 }
