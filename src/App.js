@@ -21,7 +21,7 @@ function App() {
       <Route path="/allSuccesfulTransference" component={AllSuccesfullTransferences}/>
       <Route path="/allTransference" component={AllTransferences}/>
       <Route path="/changeAmount" component={ModifyMoney}/>
-      <Route path="/Sobregiro" component={Sobregiro}/>
+      <Route path="/sobregiro" component={Sobregiro}/>
     </Switch>
   );
 }

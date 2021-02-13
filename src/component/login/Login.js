@@ -11,6 +11,12 @@ const Login = (props) => {
         let path = '/register';
         history.push(path);
     }
+
+    const goToSummary = () => {
+        let path = '/summary';
+        history.push(path);
+    }
+
     return (
         <Container>
             <form action="http://localhost:8000/login.php" method="post">
@@ -25,7 +31,7 @@ const Login = (props) => {
                     <label>password: </label>
                     <input type="text" name="passwd"/>
                 </Row>
-                <Button type="submit">Login</Button>
+                <Button type="submit" onClick={goToSummary}>Login</Button>
                 <Button onClick={routeChange}>Register</Button>
             </form>
         </Container>
