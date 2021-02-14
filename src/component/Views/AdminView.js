@@ -10,7 +10,7 @@ const AdminView = () => {
 	const redirigir = cases => {
 		let path = "";
 		if (cases === 'crearUsuario') {
-			path = '/addUser';
+			path = '/addUser/admin';
 		}
 		else if (cases === 'modDinero') {
 			path = '/changeAmount';

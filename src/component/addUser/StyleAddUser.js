@@ -9,12 +9,14 @@ export const Container = styled.div`
   transform: translate(-50%, -50%);
   border: 1px solid #6b705c;
   border-radius: 10px;
+  width: 40%
 `;
 
 export const Row = styled.div`
   display: block;
   margin: 10px 15px;
   padding: 15px 15px;
+  width: 80%;
 `;
 
 export const Button = styled.button`
@@ -25,6 +27,7 @@ export const Button = styled.button`
   margin: 10px 15px;
   border-radius: 10px;
   float: right;
+  cursor:pointer;
 `;
 
 export const Title = styled.div`

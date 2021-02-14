@@ -15,11 +15,6 @@ const Login = (props) => {
         history.push(path);
     }
 
-    const goToSummary = () => {
-        let path = '/summary';
-        history.push(path);
-    }
-
     const postLogin = () => {
         console.log(username,password);
 
@@ -36,12 +31,15 @@ const Login = (props) => {
               let rol = response.data.trim();
 
               if(rol === 'admin') {
-                let path = '/updateOverdraft';
+                let path = '/admin';
+                localStorage.setItem("username", username);
                 history.push(path);
               }
 
               else if (rol === 'cliente'){
-                let path = '/summary';
+                let path = '/user';
+                window.localStorage.setItem("username", username);
+                window.localStorage.setItem("tipo", rol);
                 history.push(path);
               }
 

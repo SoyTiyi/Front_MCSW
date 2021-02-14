@@ -3,57 +3,75 @@ import axios from 'axios'
 import { Container, Row, Button, Title } from './StyleAddUser';
 
 
-const AddUser = () => {
+const AddUser = (props) => {
     const [document, setDocument] = useState("");
     const [password, setPassword] = useState("");
     const [usuario, setUsuario] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [tipo, setTipo] = useState("");
+    const [nombre, setNombre] = useState("null");
+    const [tipo, setTipo] = useState("cliente");
 
+    const pathList = props.location.pathname.split('/');
 
     const postAddUser = props => {
-        axios.post('http://localhost:8000/user.php/clients/add', {
-            documento: document,
-            nombre: nombre,
-            usuario: usuario,
-            passwd: password,
-            tipo: tipo
-        })
-            .then(response => {
-                console.log(response);
-                console.log('datos', document, password, usuario, nombre, tipo);
-            }).catch(error => console.log(`Error: ${error}`));
+
+      var data = new FormData();
+      data.append('documento', document);
+      data.append('nombre', nombre);
+      data.append('usuario', usuario);
+      data.append('passwd', password);
+      data.append('tipo', tipo);
+
+      axios.post('http://localhost:8000/user.php/clients/add', data)
+      .then(response => {
+        alert(`Ok`)
+        window.location.reload(false);
+
+      }).catch(error => {
+        alert(`Error`)
+        window.location.reload(false);
+      });
+
     }
 
     return (
-        <Container>
-            <form action="http://localhost:8000/user.php/clients/add" method="post">
-                <Title>
-                    <h1>Add New User</h1>
-                </Title>
-                <Row>
-                    <label>Nombre: </label>
-                    <input type="text" name="nombre"/>
-                </Row>
-                <Row>
-                    <label>Usuario: </label>
-                    <input type="text" name="usuario"/>
-                </Row>
-                <Row>
-                    <label>Documento: </label>
-                    <input type="text" name="documento"/>
-                </Row>
-                <Row>
-                    <label>Tipo: </label>
-                    <input type="text" name="tipo"/>
-                </Row>
-                <Row>
-                    <label>Contraseña: </label>
-                    <input type="password" name="passwd"/>
-                </Row>
-                <Button type="submit">Create</Button>
-            </form>
-        </Container>
+      <Container>
+          <Title>
+            <h1>Add New User</h1>
+          </Title>
+          <Row>
+              <label><b>Documento </b></label>
+              <br /><br />
+              <input type="text" id="documento" onChange={event => setDocument(event.target.value)} style={{ width:"100%" }}/>
+          </Row>
+          {pathList[pathList.length - 1] === "admin" ? (
+            <div>
+            <Row>
+                <label><b>Tipo </b></label>
+                <br /><br />
+                <input type="text" id="tipo" onChange={event => setTipo(event.target.value)} style={{ width:"100%" }}/>
+            </Row>
+            <Row>
+                <label><b>Nombre </b></label>
+                <input type="text" id="nombre" onChange={event => setNombre(event.target.value)} style={{ width:"100%" }}/>
+            </Row>
+            </div>
+          ) : (
+            <div/>
+          )}
+          <Row>
+              <label><b>Usuario </b></label>
+              <br /><br />
+              <input type="text" id="usuario" onChange={event => setUsuario(event.target.value)} style={{ width:"100%" }}/>
+          </Row>
+          <Row>
+              <label><b>Contraseña </b></label>
+              <br /><br />
+              <input type="password" id="contraseña" onChange={event => setPassword(event.target.value)} style={{ width:"100%" }}/>
+          </Row>
+          <Button type="submit" onClick={postAddUser}>Create</Button>
+
+      </Container>
+
     );
 }
 

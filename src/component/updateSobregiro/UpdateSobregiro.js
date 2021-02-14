@@ -16,17 +16,14 @@ const UpdateSobregiro = () => {
   const[idSobregiro, setIdSobregiro] = useState("");
   const[estado, setEstado] = useState("");
   const[lista, setLista] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
       const componentDidMount = async () => {
-        setLoading(true);
         var data = new FormData();
         data.append('state', 'en proceso');
 
         const res = await axios.post('http://localhost:8000/sobregiro.php/overdraft/consult', data);
         setLista(res.data);
-        setLoading(false);
       };
       componentDidMount();
     }, []);

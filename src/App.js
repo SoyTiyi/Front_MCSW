@@ -32,6 +32,8 @@ function App() {
       <Route path="/createOverdraft" component={CrearSobregiro}/>
       <Route path="/user" component={UserView}/>
       <Route path="/admin" component={AdminView}/>
+      <Route path="/addUser/admin" component={AddUser}/>
+
     </Switch>
   );
 }

@@ -10,6 +10,8 @@ export const Container = styled.div`
     border: 1px solid #6b705c;
     border-radius: 10px;
     text-align: center;
+    width: 80%;
+    margin-top: 30vh;
 `;
 
 export const Row = styled.div`
@@ -40,4 +42,8 @@ export const Button = styled.button`
     border-radius: 10px;
 `;
 
-
+export const Title = styled.div`
+    text-align: center;
+    margin-top: 5vh;
+    font-size: 2.5vh;
+`;
