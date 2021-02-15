@@ -16,7 +16,7 @@ const Login = (props) => {
     }
 
     const postLogin = () => {
-      
+
       var data = new FormData();
       data.append('usuario', username);
       data.append('passwd', password);
@@ -29,7 +29,7 @@ const Login = (props) => {
 
           let rol = response.data.trim();
 
-          if(rol === 'admin') {
+          if(rol === 'admin' || rol === 'auditor') {
             let path = '/admin';
             localStorage.setItem("username", username);
             history.push(path);
