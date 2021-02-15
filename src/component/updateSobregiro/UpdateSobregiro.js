@@ -1,12 +1,10 @@
 import React , {useState, useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {Button, Buttons, Container, Title, Row} from '../login/StyleLogin'
 import axios from 'axios';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Typography from '@material-ui/core/Typography';
 
 

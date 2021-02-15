@@ -16,36 +16,35 @@ const Login = (props) => {
     }
 
     const postLogin = () => {
-        console.log(username,password);
+      
+      var data = new FormData();
+      data.append('usuario', username);
+      data.append('passwd', password);
 
-        var data = new FormData();
-        data.append('usuario', username);
-        data.append('passwd', password);
+      axios.post('http://localhost:8000/login.php', data)
+      .then(response => {
+        console.log(response)
 
-        axios.post('http://localhost:8000/login.php', data)
-        .then(response => {
-            console.log(response)
+        if(response.data !== null){
 
-            if(response.data !== null){
+          let rol = response.data.trim();
 
-              let rol = response.data.trim();
+          if(rol === 'admin') {
+            let path = '/admin';
+            localStorage.setItem("username", username);
+            history.push(path);
+          }
 
-              if(rol === 'admin') {
-                let path = '/admin';
-                localStorage.setItem("username", username);
-                history.push(path);
-              }
+          else if (rol === 'cliente'){
+            let path = '/user';
+            window.localStorage.setItem("username", username);
+            window.localStorage.setItem("tipo", rol);
+            history.push(path);
+          }
 
-              else if (rol === 'cliente'){
-                let path = '/user';
-                window.localStorage.setItem("username", username);
-                window.localStorage.setItem("tipo", rol);
-                history.push(path);
-              }
-
-            }
-        })
-        .catch(error => `Error: ${error}`);
+        }
+      })
+      .catch(error => `Error: ${error}`);
     }
 
     return (

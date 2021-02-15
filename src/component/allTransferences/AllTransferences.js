@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Table, Header, Cell, Button, Row, Title } from './StyleAllTransferences';
+import { Container, Title } from './StyleAllTransferences';
 import axios from 'axios';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
@@ -28,10 +28,13 @@ const AllTransferences = () => {
 
   return (
     <div>
-      <Title>
-        Historial de transacciones
-      </Title>
+
       <Container>
+        <Title>
+          Historial de transacciones
+        </Title>
+        <br /><br />
+
         {  lista.length === 0 ? (
 
           <React.Fragment>

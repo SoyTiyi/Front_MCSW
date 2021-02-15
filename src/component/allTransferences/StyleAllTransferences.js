@@ -11,7 +11,7 @@ export const Container = styled.div`
     border-radius: 10px;
     text-align: center;
     width: 80%;
-    margin-top: 30vh;
+    margin-top: 20%;
 `;
 
 export const Row = styled.div`
@@ -22,6 +22,8 @@ export const Row = styled.div`
 
 export const Table = styled.table`
     border: 1px solid black;
+    overflow-y: auto;
+
 `;
 
 export const Header = styled.th`
@@ -44,6 +46,6 @@ export const Button = styled.button`
 
 export const Title = styled.div`
     text-align: center;
-    margin-top: 5vh;
     font-size: 2.5vh;
-`;
+    padding-top: 3vh;
+ `;

@@ -9,6 +9,7 @@ export const Container = styled.div`
   transform: translate(-50%, -50%);
   border: 1px solid #6b705c;
   border-radius: 10px;
+  width: 30%;
 `;
 
 export const Row = styled.div`

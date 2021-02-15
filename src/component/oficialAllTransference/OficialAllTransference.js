@@ -21,7 +21,6 @@ const OficalAllTransference = () => {
       var data = new FormData();
       data.append('usuario', window.localStorage.getItem("username"));
 
-
       const res = await axios.post('http://localhost:8000/trans.php/transaction/actions', data);
       setLista(res.data);
     };
@@ -30,10 +29,12 @@ const OficalAllTransference = () => {
 
   return (
     <div>
-      <Title>
-        Mis movimientos
-      </Title>
       <Container>
+        <Title>
+          Mis movimientos
+        </Title>
+        <br /><br />
+
         {  lista.length === 0 ? (
 
           <React.Fragment>

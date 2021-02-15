@@ -41,8 +41,8 @@ const UserView = () => {
 		else if (cases === 'overdraft') {
 			path = '/overdraft';
 		}
-		else {
-			path = '/allTransference';
+		else if (cases === 'transferencia'){
+			path = '/newTransference';
 		}
 
 		history.push(path);
@@ -67,7 +67,7 @@ const UserView = () => {
 
 				<ListButtons>
 					<Button onClick={() => redirigir('movimientos')}>Mis movimientos</Button>
-				<Button onClick={() => redirigir('misTrans')}>Historial de tranferencias</Button>
+				<Button onClick={() => redirigir('misTrans')}>Historial de transacciones</Button>
 					<Button onClick={() => redirigir('saldo')}>Mi saldo total</Button>
 					<Button onClick={() => redirigir('overdraft')}>Solicitar Sobregiro</Button>
 					<Button onClick={() => redirigir('transferencia')}>Realizar transferencia</Button>
