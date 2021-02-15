@@ -43,100 +43,112 @@ const UpdateSobregiro = () => {
 
     return(
       <div>
-        <div >
-
-          <div>
-            <List>
-              {lista.map(user => (
-                <div key={user.id} >
+        <div style={{maxHeight:"30vh", overflow: "scroll", display: "block"}}>
+          <List>
+            {lista.map(user => (
+              <div key={user.id} >
                 <div>
-                    <ListItem alignItems="flex-start">
+                  <ListItem alignItems="flex-start">
 
-                      <ListItemText
-                        primary={
+                    <ListItemText
+                      primary={
 
-                          <React.Fragment>
-                            <Typography
-                              component="span"
-                              variant="body2"
-                              color="textPrimary"
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="textPrimary"
                             >
-                              Id -
-                            </Typography>
-                            {" "+user.id}
-                          </React.Fragment>
-                        }
+                            Id -
+                          </Typography>
+                          {" "+user.id}
+                        </React.Fragment>
+                      }
                       />
 
-                      <ListItemText
-                        primary={
-                          <React.Fragment>
-                            <Typography
-                              component="span"
-                              variant="body2"
-                              color="textPrimary"
+                    <ListItemText
+                      primary={
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="textPrimary"
                             >
-                              Cuenta -
-                            </Typography>
-                            {" "+user.cuenta_id}
-                          </React.Fragment>
-                        }
+                            Cuenta -
+                          </Typography>
+                          {" "+user.cuenta_id}
+                        </React.Fragment>
+                      }
                       />
 
-                      <ListItemText
-                        primary={
+                    <ListItemText
+                      primary={
 
-                          <React.Fragment>
-                            <Typography
-                              component="span"
-                              variant="body2"
-                              color="textPrimary"
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="textPrimary"
                             >
-                              Saldo -
-                            </Typography>
-                            {" "+user.saldo}
-                          </React.Fragment>
-                        }
+                            Saldo -
+                          </Typography>
+                          {" "+user.saldo}
+                        </React.Fragment>
+                      }
                       />
 
-                      <ListItemText
-                        primary={
-                          <React.Fragment>
-                            <Typography
-                              component="span"
-                              variant="body2"
-                              color="textPrimary"
+                    <ListItemText
+                      primary={
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="textPrimary"
                             >
-                              Estado -
-                            </Typography>
-                            {" "+user.estado}
-                          </React.Fragment>
-                        }
+                            Estado -
+                          </Typography>
+                          {" "+user.estado}
+                        </React.Fragment>
+                      }
                       />
 
-                    </ListItem>
-                  </div>
-                  <Divider />
+                    <ListItemText
+                      primary={
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            color="textPrimary"
+                            >
+                            Fecha -
+                          </Typography>
+                          {" "+user.fecha}
+                        </React.Fragment>
+                      }
+                      />
 
+                  </ListItem>
                 </div>
-              ))}
-            </List>
+                <Divider />
 
-          </div>
+              </div>
+            ))}
+          </List>
+
         </div>
         <Container>
 
-            <Row>
-                <label>Id Sobregiro: </label>
-                <input type="text" name="id" onChange={event => setIdSobregiro(event.target.value)}/>
-            </Row>
-            <Row>
-                <label>Nuevo estado Sobregiro: </label>
-                <input type="text" name="estado" onChange={event => setEstado(event.target.value)}/>
-            </Row>
-            <Buttons>
-                <Button type="submit" onClick={postUpdate}>Cambiar</Button>
-            </Buttons>
+          <Row>
+            <label>Id Sobregiro: </label>
+            <input type="text" name="id" onChange={event => setIdSobregiro(event.target.value)}/>
+          </Row>
+          <Row>
+            <label>Nuevo estado Sobregiro: </label>
+            <input type="text" name="estado" onChange={event => setEstado(event.target.value)}/>
+          </Row>
+          <Buttons>
+            <Button type="submit" onClick={postUpdate}>Cambiar</Button>
+          </Buttons>
 
         </Container>
       </div>

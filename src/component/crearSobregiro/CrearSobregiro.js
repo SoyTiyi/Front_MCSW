@@ -1,25 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react'
 import { Button, Container, Row, Title } from '../login/StyleLogin';
+import axios from 'axios';
 
 const CrearSobregiro = () => {
-    return(
-        <Container>
-            <form action="http://localhost:8000/sobregiro.php/clients/add" method="post">
-                <Title>
-                    <h1>Crear Sobregiro</h1>
-                </Title>
-                <Row>
-                    <label>Numero de cuenta: </label>
-                    <input type="text" name="num_cuenta"/>
-                </Row>
-                <Row>
-                    <label>Saldo: </label>
-                    <input type="text" name="saldo"/>
-                </Row>
-                <Button type="submit">Crear</Button>
-            </form>
-        </Container>
-    );
+
+  const[saldo, setSaldo] = useState("");
+
+  const[cuenta, setCuenta] = useState("");
+
+  const post = () => {
+    console.log(cuenta,saldo);
+
+    var data = new FormData();
+    data.append('num_cuenta', cuenta);
+    data.append('saldo', saldo);
+
+    const res = axios.post('http://localhost:8000/sobregiro.php/clients/add', data)
+    .then(response => {
+      alert("Ok");
+      window.location.reload(false);
+    })
+    .catch(error => {
+      console.log(`Error: ${error}`);
+      alert("Error");
+    })
+
+  }
+
+  return(
+    <Container>
+
+      <Title>
+        <h1>Crear Sobregiro</h1>
+      </Title>
+      <Row>
+        <label><b>Numero de cuenta </b></label>
+        <br /><br />
+        <input type="text" name="num_cuenta" onChange={event => setCuenta(event.target.value)} style={{ width:"100%" }}/>
+      </Row>
+      <Row>
+        <label><b>Saldo </b></label>
+        <br /><br />
+        <input type="text" name="saldo" onChange={event => setSaldo(event.target.value)} style={{ width:"100%" }}/>
+      </Row>
+      <Button type="submit" onClick={post}>Crear</Button>
+    </Container>
+  );
 }
 
 export default CrearSobregiro;

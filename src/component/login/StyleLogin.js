@@ -9,6 +9,7 @@ export const Container = styled.div`
   border: 1px solid #6b705c;
   border-radius: 10px;
   text-align: center;
+  width: 30%;
 `;
 
 export const Row = styled.div`

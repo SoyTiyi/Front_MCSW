@@ -5,6 +5,7 @@ import UserAccount from './component/userAcount/UserAcount';
 import AddUser from './component/addUser/AddUser';
 import Transference from './component/transference/Transference';
 import AllSuccesfullTransferences from './component/allTransferences/AllTransferences';
+import ListAllUserMoves from './component/allTransferences/ListAllUserMoves';
 import ModifyMoney from './component/modifyMoney/ModifyMoney';
 import Sobregiro from './component/sobregiro/Sobregiro';
 import UpdateSobregiro from './component/updateSobregiro/UpdateSobregiro';
@@ -33,6 +34,7 @@ function App() {
       <Route path="/user" component={UserView}/>
       <Route path="/admin" component={AdminView}/>
       <Route path="/addUser/admin" component={AddUser}/>
+      <Route path="/usersOpers" component={ListAllUserMoves}/>
 
     </Switch>
   );

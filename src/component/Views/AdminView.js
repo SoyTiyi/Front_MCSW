@@ -18,12 +18,13 @@ const AdminView = () => {
 		else if (cases === 'autorizarSobre') {
 			path = '/updateOverdraft';
 		}
-		else if (cases === 'listarSobregiros') {
-			path = '/consultOverdraft';
+		else if (cases === 'listarMovs') {
+			path = '/usersOpers';
 		}
-		else {
+		else if (cases === 'crearSobregiro') {
 			path = '/createOverdraft';
 		}
+		
 		history.push(path);
 	}
 
@@ -33,7 +34,7 @@ const AdminView = () => {
 				<Button onClick={() => redirigir('crearUsuario')}>Crear un Usuario</Button>
 				<Button onClick={() => redirigir('modDinero')}>Modificar dinero de un usuario</Button>
 				<Button onClick={() => redirigir('autorizarSobre')}>Autorizar Sobregiro</Button>
-				<Button onClick={() => redirigir('listarSobregiros')}>Listar Sobregiros</Button>
+				<Button onClick={() => redirigir('listarMovs')}>Listar Movimientos</Button>
 				<Button onClick={() => redirigir('crearSobregiro')}>Crear Sobregiro</Button>
 			</ListButtons>
 		</Container>
