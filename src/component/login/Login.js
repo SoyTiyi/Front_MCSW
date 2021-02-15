@@ -53,12 +53,14 @@ const Login = (props) => {
               <h1>Login</h1>
           </Title>
           <Row>
-              <label>Username: </label>
-              <input type="text" name="username" onChange={event => setUsername(event.target.value)}/>
+              <label><b>Username </b></label>
+              <br /><br />
+              <input type="text" name="username" onChange={event => setUsername(event.target.value)}  style={{ width:"100%" }}/>
           </Row>
           <Row>
-              <label>Password: </label>
-              <input type="password" name="pasword" onChange={event => setPassword(event.target.value)}/>
+              <label><b>Password </b></label>
+              <br /><br />
+              <input type="password" name="pasword" onChange={event => setPassword(event.target.value)}  style={{ width:"100%" }}/>
           </Row>
           <Buttons>
               <Button onClick={postLogin}>Login</Button>

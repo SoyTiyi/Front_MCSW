@@ -1,26 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Title } from './StyleUserAcount';
 import { Container, Button, Row } from '../login/StyleLogin';
 import axios from 'axios';
 
 const UserAcount = props => {
 
-    const [cuenta, setCuenta] = useState("");
+    const [saldo, setSaldo] = useState("");
     const api = axios.create({baseURL: 'http://localhost:8000'})
     let balance = <p>Loading.....</p>;
 
-    const getBalance = () => {
-        api.post('/user.php/clients/getBalance', cuenta)
-            .then(response => {
-                console.log(response);
-                if (response.data !== false && response.data !== "") {
-                    balance = <p>{response.data}</p>;
-                }
-            })
-            .catch(error => {
-                console.log(`Error: ${error}`);
-            })
-    }
+      const componentDidMountSaldo = async (cuenta) => {
+
+        console.log(window.localStorage.getItem("username"));
+
+        var data = new FormData();
+        data.append('num_cuenta', cuenta);
+
+
+        const res = await axios.post('http://localhost:8000/user.php/clients/getBalance', data);
+        setSaldo(res.data);
+      };
+
+    useEffect(() => {
+      const componentDidMount = async () => {
+
+        var data = new FormData();
+        data.append('usuario', window.localStorage.getItem("username"));
+
+        const res = await axios.post('http://localhost:8000/user.php/clients/getAccount', data);
+        componentDidMountSaldo(res.data);
+      };
+      componentDidMount();
+    }, []);
 
 
     console.log("entre");
@@ -28,13 +39,13 @@ const UserAcount = props => {
         <Container>
             <form action="http://localhost:8000/user.php/clients/getBalance" method="post">
                 <Title>
-                    <h1>Get Balance</h1>
+                    <h1>Saldo total</h1>
                 </Title>
                 <Row>
-                    <label>Cuenta: </label>
-                    <input type="text" name="num_cuenta"/>
+                    <label><b>Cantidad: </b></label> {saldo}
+
                 </Row>
-                <Button type="submit">Submit</Button>
+
             </form>
         </Container>
     );

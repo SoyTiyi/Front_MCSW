@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Title, Row, Button } from './StyleSobregiro';
+import { Container, Title, Row, Button, Buttons } from './StyleSobregiro';
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import Divider from '@material-ui/core/Divider';
@@ -181,7 +181,7 @@ const Sobregiro = () => {
           {console.log(cuenta)}
 
           {console.log(lista)}
-          
+
           <Title>
             <h1>Sobregiro</h1>
           </Title>
@@ -190,9 +190,9 @@ const Sobregiro = () => {
             <br /><br />
             <input type="text" name="saldo" onChange={event => setSaldo(event.target.value)}/>
           </Row>
-
-          <Button onClick={post}>Enviar</Button>
-
+          <Buttons>
+            <Button onClick={post}>Enviar</Button>
+          </Buttons>
         </Container>
       </div>
     </div>

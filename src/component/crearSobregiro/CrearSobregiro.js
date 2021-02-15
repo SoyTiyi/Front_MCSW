@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Container, Row, Title } from '../login/StyleLogin';
+import React, { useState } from 'react'
+import { Button, Buttons, Container, Row, Title } from '../login/StyleLogin';
 import axios from 'axios';
 
 const CrearSobregiro = () => {
@@ -43,7 +43,10 @@ const CrearSobregiro = () => {
         <br /><br />
         <input type="text" name="saldo" onChange={event => setSaldo(event.target.value)} style={{ width:"100%" }}/>
       </Row>
-      <Button type="submit" onClick={post}>Crear</Button>
+      <Buttons>
+        <Button type="submit" onClick={post}>Crear</Button>
+      </Buttons>
+
     </Container>
   );
 }

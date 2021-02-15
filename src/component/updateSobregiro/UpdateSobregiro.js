@@ -139,12 +139,14 @@ const UpdateSobregiro = () => {
         <Container>
 
           <Row>
-            <label>Id Sobregiro: </label>
-            <input type="text" name="id" onChange={event => setIdSobregiro(event.target.value)}/>
+            <label><b>Id Sobregiro </b></label>
+            <br /><br />
+            <input type="text" name="id" onChange={event => setIdSobregiro(event.target.value)} style={{ width:"100%" }}/>
           </Row>
           <Row>
-            <label>Nuevo estado Sobregiro: </label>
-            <input type="text" name="estado" onChange={event => setEstado(event.target.value)}/>
+            <label><b>Nuevo estado Sobregiro </b></label>
+            <br /><br />
+            <input type="text" name="estado" onChange={event => setEstado(event.target.value)} style={{ width:"100%" }}/>
           </Row>
           <Buttons>
             <Button type="submit" onClick={postUpdate}>Cambiar</Button>

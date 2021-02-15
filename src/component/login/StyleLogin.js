@@ -8,7 +8,7 @@ export const Container = styled.div`
   transform: translate(-50%, -50%);
   border: 1px solid #6b705c;
   border-radius: 10px;
-  text-align: center;
+  text-align: left;
   width: 30%;
 `;
 
@@ -31,6 +31,9 @@ export const Button = styled.button`
     border: 1px solid #0096c7;
     margin: 10px 15px;
     border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+
 `;
 
 export const Title = styled.div`

@@ -8,7 +8,7 @@ export const Container = styled.div`
   transform: translate(-50%, -50%);
   border: 1px solid #6b705c;
   border-radius: 10px;
-  text-align: center;
+  text-align: left;
 `;
 
 export const Row = styled.div`

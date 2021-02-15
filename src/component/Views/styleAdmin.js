@@ -9,11 +9,14 @@ export const ListButtons = styled.div`
 	top: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	transfrom: translate (-50%, -50%);
+	width: 110%;
+
 `;
 
 export const Button = styled.button`
-	color: white; 
+	color: white;
 	background-color: #00b4d8;
 	padding: 20px 15px;
 	border: 1px solid #00b4d8;
+	width: 20%;
 `;
