@@ -6,7 +6,8 @@
 
 ### Recursos
 
-(https://nodejs.org/es/download/package-manager/)[https://nodejs.org/es/download/package-manager/]
+[https://nodejs.org/es/download/package-manager/](https://nodejs.org/es/download/package-manager/)
+
 **Linux mint:** [https://linuxhint.com/install_npm_linux_mint/](https://linuxhint.com/install_npm_linux_mint/) 
 
 ## Run
