@@ -10,10 +10,10 @@ const AdminView = () => {
 	const redirigir = cases => {
 		let path = "";
 		if (cases === 'crearUsuario') {
-			path = '/addUser/admin';
+			path = '/admin/users/new';
 		}
 		else if (cases === 'modDinero') {
-			path = '/changeAmount';
+			path = '/admin/users/modifyBalance';
 		}
 		else if (cases === 'autorizarSobre') {
 			path = '/updateOverdraft';
@@ -24,7 +24,7 @@ const AdminView = () => {
 		else if (cases === 'crearSobregiro') {
 			path = '/createOverdraft';
 		}
-		
+
 		history.push(path);
 	}
 

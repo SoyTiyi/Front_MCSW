@@ -1,4 +1,4 @@
-import UserAccount from './../component/userAcount/UserAcount';
+import UserAccount from './../component/userAccount/UserAccount';
 import AddUser from './../component/addUser/AddUser';
 import Transference from './../component/transference/Transference';
 import AllSuccesfullTransferences from './../component/allTransferences/AllTransferences';
@@ -20,7 +20,7 @@ export const routes = [
     roles: ['cliente'],
   },
   {
-    path: "/addUser",
+    path: "/admin/users/new",
     component: AddUser,
     roles: ['admin'],
   },
@@ -40,7 +40,7 @@ export const routes = [
     roles: ['admin', 'auditor'],
   },
   {
-    path: "/changeAmount",
+    path: "/admin/users/modifyBalance",
     component: ModifyMoney,
     roles: ['admin'],
   },
@@ -78,11 +78,6 @@ export const routes = [
     path: "/auditor",
     component: AuditorView,
     roles: ['auditor']
-  },
-  {
-    path: "/addUser/admin",
-    component: AddUser,
-    roles: ['admin'],
   },
   {
     path: "/usersOpers",

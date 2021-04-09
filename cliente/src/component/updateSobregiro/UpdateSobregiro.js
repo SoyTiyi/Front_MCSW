@@ -1,160 +1,86 @@
 import React , {useState, useEffect} from 'react';
-import {Button, Buttons, Container, Title, Row} from '../login/StyleLogin'
-import axios from 'axios';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-
+import {Button, Buttons, Container, Row} from '../login/StyleLogin';
+import RequestService from './../../services/RequestService';
+import TableGrid  from './../listas/TableGrid';
+import { sobregirosCols, estadoSobregiros }  from './../listas/TablesInfo';
+import DropDownInput  from './../listas/DropDownInput';
 
 const UpdateSobregiro = () => {
 
 
   const[idSobregiro, setIdSobregiro] = useState("");
   const[estado, setEstado] = useState("");
+  const[porcentaje, setPorcentaje] = useState(0);
   const[lista, setLista] = useState([]);
 
   useEffect(() => {
-      const componentDidMount = async () => {
-        var data = new FormData();
-        data.append('state', 'en proceso');
+    const componentDidMount = async () => {
+      let reqBody = null;
 
-        const res = await axios.post('http://localhost:8000/sobregiro.php/overdraft/consult', data);
-        setLista(res.data);
-      };
-      componentDidMount();
-    }, []);
+      RequestService.post("/overdraft/getAll", reqBody)
+      .then(response => {
+        if (!response.ok) {
+          return
+        }
+        return response
+      })
+      .then(response => response.json())
+      .then(data => {
+        setLista(data.success)
+      })
+    };
+    componentDidMount();
+  }, []);
 
   const postUpdate = () => {
+    let reqBody = `id=${idSobregiro}&estado=${estado}&porcentaje=${porcentaje}`
 
-      var data = new FormData();
-      data.append('id', idSobregiro);
-      data.append('estado', estado);
+    RequestService.post("/clients/overdraft/update", reqBody)
+    .then(response => {
+      if (!response.ok) {
+        alert("Datos inválidos")
+        window.location.reload(false);
+        return
+      }
+      return response
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(data.success)
       window.location.reload(false);
-
-      axios.post('http://localhost:8000/sobregiro.php/overdraft/update', data)
-      .then(response => {
-          console.log(response)
-      })
-      .catch(error => `Error: ${error}`);
+    })
   }
 
-
-    return(
-      <div>
-        <div style={{maxHeight:"30vh", overflow: "scroll", display: "block"}}>
-          <List>
-            {lista.map(user => (
-              <div key={user.id} >
-                <div>
-                  <ListItem alignItems="flex-start">
-
-                    <ListItemText
-                      primary={
-
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            color="textPrimary"
-                            >
-                            Id -
-                          </Typography>
-                          {" "+user.id}
-                        </React.Fragment>
-                      }
-                      />
-
-                    <ListItemText
-                      primary={
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            color="textPrimary"
-                            >
-                            Cuenta -
-                          </Typography>
-                          {" "+user.cuenta_id}
-                        </React.Fragment>
-                      }
-                      />
-
-                    <ListItemText
-                      primary={
-
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            color="textPrimary"
-                            >
-                            Saldo -
-                          </Typography>
-                          {" "+user.saldo}
-                        </React.Fragment>
-                      }
-                      />
-
-                    <ListItemText
-                      primary={
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            color="textPrimary"
-                            >
-                            Estado -
-                          </Typography>
-                          {" "+user.estado}
-                        </React.Fragment>
-                      }
-                      />
-
-                    <ListItemText
-                      primary={
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            color="textPrimary"
-                            >
-                            Fecha -
-                          </Typography>
-                          {" "+user.fecha}
-                        </React.Fragment>
-                      }
-                      />
-
-                  </ListItem>
-                </div>
-                <Divider />
-
-              </div>
-            ))}
-          </List>
-
-        </div>
-        <Container>
-
-          <Row>
-            <label><b>Id Sobregiro </b></label>
-            <br /><br />
-            <input type="text" name="id" onChange={event => setIdSobregiro(event.target.value)} style={{ width:"100%" }}/>
-          </Row>
-          <Row>
-            <label><b>Nuevo estado Sobregiro </b></label>
-            <br /><br />
-            <input type="text" name="estado" onChange={event => setEstado(event.target.value)} style={{ width:"100%" }}/>
-          </Row>
-          <Buttons>
-            <Button type="submit" onClick={postUpdate}>Cambiar</Button>
-          </Buttons>
-
-        </Container>
+  return(
+    <div>
+      <div style={{width:"90%", maxHeight:"33vh", overflow: "scroll", display: "block", justifyContent: "center", marginRight: "auto", marginLeft: "auto"}}>
+        <TableGrid columns={sobregirosCols} rows={lista} />
       </div>
-    );
+      <Container style={{marginTop: "5vh"}}>
+        <Row>
+          <label><b>Id Sobregiro </b></label>
+          <br /><br />
+          <input type="text" name="id" onChange={event => setIdSobregiro(event.target.value)} style={{ width:"100%" }}/>
+        </Row>
+        <Row>
+          <label><b>Nuevo estado de sobregiro </b></label>
+          <br /><br />
+          <DropDownInput values={estadoSobregiros} name="estados" currentValue={estado} setChange={setEstado}/>
+        </Row>
+        <Row>
+          <label><b>Porcentaje </b></label>
+          <br /><br />
+          <input type="number" name="porcentaje" onChange={event => setPorcentaje(event.target.value)} style={{ width:"100%" }}/>
+        </Row>
+        <Buttons>
+          <Button type="submit" onClick={postUpdate}>Cambiar</Button>
+        </Buttons>
+
+      </Container>
+    </div>
+
+  );
+
 }
 
 

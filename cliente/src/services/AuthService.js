@@ -1,22 +1,9 @@
 import React from 'react';
-
+import {setHeaderOptions} from './RequestHeader';
 
 const axios = require('axios').default;
 const URL = 'http://localhost:3000';
 /*const URL = 'http://localhost:8080/api/auth';*/
-
-const setHeaderOptions = (body) => {
-
-  const options = {
-    method: 'post',
-    credentials: 'include',
-    headers: {
-      'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    },
-    body: body
-  }
-  return options;
-}
 
 const getExpireUser = async (reqBody) => {
 

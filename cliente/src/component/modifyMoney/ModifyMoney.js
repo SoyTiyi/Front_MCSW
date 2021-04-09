@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Row } from '../allTransferences/StyleAllTransferences';
-import axios from 'axios';
 import { Container, Title } from './StyleModifyMoney';
+import RequestService from './../../services/RequestService';
 
 const ModifyMoney = () => {
 
@@ -10,42 +10,41 @@ const ModifyMoney = () => {
 
   const changeAmount = () => {
 
-      var data = new FormData();
-      data.append('num_cuenta', cuenta);
-      data.append('saldo', newValor);
+    let reqBody = `num_cuenta=${cuenta}&saldo=${newValor}`
 
-      axios.post("http://localhost:8000/user.php/clients/modifyBal", data)
-          .then(response => {
-              console.log(response);
-              alert("Ok");
-              window.location.reload(false);
-
-          })
-          .catch(error => {
-            console.log(`Error: ${error}`)
-            alert("Error")
-            window.location.reload(false);
-
-          });
+    RequestService.post("/clients/modifyBalance", reqBody)
+    .then(response => {
+      if (!response.ok) {
+        alert("Datos inválidos")
+        window.location.reload(false);
+        return
+      }
+      return response
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert(JSON.stringify(data.success))
+      window.location.reload(false);
+    })
   }
 
   return (
-      <Container>
-          <Title>
-              <h1>Modificar saldo</h1>
-          </Title>
-          <Row>
-              <label><b>Cuenta </b></label>
-              <br /><br />
-              <input type="text" onChange={event => setCuenta(event.target.value)} style={{ width:"100%" }}/>
-          </Row>
-          <Row>
-              <label><b>Nuevo saldo </b></label>
-              <br /><br />
-              <input type="text" onChange={event => setNewValor(event.target.value)} style={{ width:"100%" }}/>
-          </Row>
-          <Button onClick={changeAmount}>Change</Button>
-      </Container>
+    <Container>
+      <Title>
+        <h1>Modificar saldo</h1>
+      </Title>
+      <Row>
+        <label><b>Cuenta </b></label>
+        <br /><br />
+        <input type="text" onChange={event => setCuenta(event.target.value)} style={{ width:"100%" }}/>
+      </Row>
+      <Row>
+        <label><b>Nuevo saldo </b></label>
+        <br /><br />
+        <input type="text" onChange={event => setNewValor(event.target.value)} style={{ width:"100%" }}/>
+      </Row>
+      <Button onClick={changeAmount}>Change</Button>
+    </Container>
   );
 }
 
