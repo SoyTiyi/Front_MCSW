@@ -32,9 +32,9 @@ const resolvers = {
 };
 
 const context = ({ req }) => {
-  const token = req.cookies['jwt'] || ''
+  const tokenExp = req.cookies['jwt'] || ''
   try {
-    return { username, rol, originalToken } = jwt.verify(token, SECRET_KEY)
+    return { usuario, rol, cuenta, token } = jwt.verify(tokenExp, SECRET_KEY)
   } catch (e) {
     throw new AuthenticationError(
       'Authentication token is invalid, please log in',
@@ -75,6 +75,12 @@ app.use(cookieParser())
 server.applyMiddleware({ app, cors: false })
 app.use(express.urlencoded({extended: true}))
 
+/*
+Función para obtener la cabecera con el token del back (para poder hacer peticiones)
+
+@expToken Token de express
+@return el formato del token de autenticación para la cabacera si el token de express existe; null en caso contrario
+*/
 const headerConfig = ( expToken ) => {
 
   try{
@@ -88,12 +94,18 @@ const headerConfig = ( expToken ) => {
   }
 }
 
+/*
+Función para obtener el nombre de usuario guardado en el expToken
+
+@expToken Token de express
+@return El nombre de usuario si el token existe; null en caso contrario
+*/
 const getUsuario = ( expToken ) => {
 
   try{
-    const { username } = jwt.verify(expToken, SECRET_KEY)
+    const { usuario } = jwt.verify(expToken, SECRET_KEY)
 
-    return username;
+    return usuario;
   }
 
   catch(e){
@@ -101,6 +113,43 @@ const getUsuario = ( expToken ) => {
   }
 }
 
+/*
+Función para obtener el rol del usuario almacenado en el token de express
+
+@expToken Token de express
+@return Retorna el rol del usuario, si el token de express existe; null en caso contrario
+*/
+const getRol = ( expToken ) => {
+
+  try{
+    const { rol } = jwt.verify(expToken, SECRET_KEY)
+
+    return rol;
+  }
+
+  catch(e){
+    return null;
+  }
+}
+
+/*
+Función para obtener el número de la cuenta del usuario almacenado en el token de express
+
+@expToken Token de express
+@return Retorna el número de cuenta del usuario, si el token de express existe; null en caso contrario
+*/
+const getCuenta = ( expToken ) => {
+
+  try{
+    const { cuenta } = jwt.verify(expToken, SECRET_KEY)
+
+    return cuenta;
+  }
+
+  catch(e){
+    return null;
+  }
+}
 
 /*
 Petición para el manejo de inicio de sesión de un usuario
@@ -111,7 +160,7 @@ app.post('/login', asyncMiddleware(async (req, res, next) => {
 
   const { username, passwd } = req.body;
 
-  var token; var rol;
+  let token; let rol; let cuenta;
 
   await axios.post(urlBack + '/login',
   JSON.stringify({
@@ -121,10 +170,9 @@ app.post('/login', asyncMiddleware(async (req, res, next) => {
   .then(response => {
 
     if(response.data){
-
-      rol = response.data['role'];
+      rol = response.data['role'].trim();
       token = response.data['token'];
-
+      if(response.data['cuenta']) cuenta = response.data['cuenta'].trim();
     }
   })
   .catch(error => console.log(`Error: ${error}`));
@@ -137,17 +185,22 @@ app.post('/login', asyncMiddleware(async (req, res, next) => {
     return
   }
 
-  // Se crea un token con JWT el nombre de usuario, su rol y su token con el servidor PHP
-  const encriptedInfo = jwt.sign(
-    {
-      username: username,
-      rol: rol,
-      token: token
-    },
-    SECRET_KEY,
-  );
+  const clientUser = {
+    usuario: username,
+    rol: rol,
+    cuenta: cuenta,
+    token: token
+  }
 
-  // Se guarda el token en una cookie
+  const highUser = {
+    usuario: username,
+    rol: rol,
+    token: token
+  }
+  // Se crea un token con JWT el nombre de usuario, su rol y su token con el servidor PHP
+  const encriptedInfo = cuenta ? jwt.sign(clientUser,SECRET_KEY,) : jwt.sign(highUser, SECRET_KEY,);
+
+  // Se guarda el token en una cookie (dura 10 minutos)
   res.cookie('jwt', encriptedInfo, {
     httpOnly: true,
     maxAge: 600000,
@@ -175,7 +228,7 @@ app.post('/verifyUser', asyncMiddleware(async (req, res, next) => {
     const  expToken  = req.cookies['jwt'] || null;
 
     // Datos originales del token (antes de encriptar)
-    const { username, rol, token} = jwt.verify(expToken, SECRET_KEY)
+    const { usuario, rol, token} = jwt.verify(expToken, SECRET_KEY)
 
     const rolInList = rolesList.includes(rol.trim())
 
@@ -265,7 +318,6 @@ app.post('/clients/modifyBalance', asyncMiddleware(async (req, res, next) => {
     { headers: { Authorization: header } })
     .then(response => {
       ans = response.data
-      console.log(response.data)
     })
     .catch(error => console.log(`Error: ${error}`));
   }
@@ -292,14 +344,14 @@ app.post('/overdraft/getAll', asyncMiddleware(async (req, res, next) => {
   let ans = null
   const  expToken  = req.cookies['jwt'] || null;
 
-  let username = getUsuario(expToken);
+  let usuario = getUsuario(expToken);
   let header = headerConfig(expToken);
 
-  if(header && username) {
+  if(header && usuario) {
 
     await axios.post(urlBack + '/overdraft/getAll',
     JSON.stringify({
-      usuario: username,
+      usuario: usuario,
     }),
     { headers: { Authorization: header } })
     .then(response => {
@@ -336,17 +388,17 @@ app.post('/clients/overdraft/update', asyncMiddleware(async (req, res, next) => 
   let ans = null
   const  expToken  = req.cookies['jwt'] || null;
 
-  let username = getUsuario(expToken);
+  let usuario = getUsuario(expToken);
   let header = headerConfig(expToken);
 
-  if(header && username) {
+  if(header && usuario) {
 
     await axios.post(urlBack + '/overdraft/update',
     JSON.stringify({
       id: id,
       estado: estado,
       porcentaje: porcentaje,
-      usuario: username
+      usuario: usuario
     }),
     { headers: { Authorization: header } })
     .then(response => {
@@ -363,6 +415,314 @@ app.post('/clients/overdraft/update', asyncMiddleware(async (req, res, next) => 
   else {
     res.status(404).send({
       success: false,
+      message: `Datos inválidos`,
+    })
+  }
+
+}));
+
+/*
+Petición para obtener todas las transacciones de los usuarios del banco
+*/
+app.post('/clients/transactiones/getAll', asyncMiddleware(async (req, res, next) => {
+
+  let ans = null
+  const  expToken  = req.cookies['jwt'] || null;
+
+  let usuario = getUsuario(expToken);
+  let header = headerConfig(expToken);
+
+  if(header && usuario) {
+
+    await axios.post(urlBack + '/operations/getAll',
+    JSON.stringify({
+      usuario: usuario,
+    }),
+    { headers: { Authorization: header } })
+    .then(response => {
+      ans = response.data
+    })
+    .catch(error => console.log(`Error: ${error}`));
+  }
+
+  if(ans) {
+    res.send({
+      success: ans,
+    })
+  }
+  else {
+    res.status(404).send({
+      success: false,
+      message: `Datos inválidos`,
+    })
+  }
+
+}));
+
+/*
+Petición para obtener el número de cuenta bancaria de un usuario cliente
+*/
+app.post('/clients/user/getAccount', asyncMiddleware(async (req, res, next) => {
+
+  let ans = null
+  const  expToken  = req.cookies['jwt'] || null;
+
+  let cuenta = getCuenta(expToken);
+
+  if(cuenta) {
+    ans = cuenta;
+  }
+
+  if(ans) {
+    res.send({
+      success: ans,
+    })
+  }
+  else {
+    res.status(404).send({
+      success: false,
+      message: `Datos inválidos`,
+    })
+  }
+
+}));
+
+/*
+Petición para obtener todas las operaciones de un usuario (las transacciones que ha realizado tanto exitosas como rechazadas)
+*/
+app.post('/clients/user/operations/transactions', asyncMiddleware(async (req, res, next) => {
+
+  let ans = null
+  const  expToken  = req.cookies['jwt'] || null;
+
+  let usuario = getUsuario(expToken);
+  let header = headerConfig(expToken);
+
+  if(header && usuario) {
+
+    await axios.post(urlBack + '/user/operations/myTransactions',
+    JSON.stringify({
+      usuario: usuario,
+    }),
+    { headers: { Authorization: header } })
+    .then(response => {
+      ans = response.data
+    })
+    .catch(error => console.log(`Error: ${error}`));
+  }
+
+  if(ans) {
+    res.send({
+      success: ans,
+    })
+  }
+  else {
+    res.status(404).send({
+      success: false,
+      message: `Datos inválidos`,
+    })
+  }
+
+}));
+
+/*
+Petición para obtener todas las operaciones de un usuario (las transacciones que ha realizado tanto exitosas como rechazadas, y las que ha recibido)
+*/
+app.post('/clients/user/operations', asyncMiddleware(async (req, res, next) => {
+
+  let ans = null
+  const  expToken  = req.cookies['jwt'] || null;
+
+  let usuario = getUsuario(expToken);
+  let header = headerConfig(expToken);
+
+  if(header && usuario) {
+
+    await axios.post(urlBack + '/user/operations/getAll',
+    JSON.stringify({
+      usuario: usuario,
+    }),
+    { headers: { Authorization: header } })
+    .then(response => {
+      ans = response.data
+    })
+    .catch(error => console.log(`Error: ${error}`));
+  }
+
+  if(ans) {
+    res.send({
+      success: ans,
+    })
+  }
+  else {
+    res.status(404).send({
+      success: false,
+      message: `Datos inválidos`,
+    })
+  }
+
+}));
+
+/*
+Petición para obtener el saldo de un usuario
+*/
+app.post('/clients/user/balance', asyncMiddleware(async (req, res, next) => {
+
+  let ans = null
+  const  expToken  = req.cookies['jwt'] || null;
+
+  let cuenta = getCuenta(expToken);
+  let header = headerConfig(expToken);
+
+  if(header && cuenta) {
+
+    await axios.post(urlBack + '/user/getBalance',
+    JSON.stringify({
+      num_cuenta: cuenta,
+    }),
+    { headers: { Authorization: header } })
+    .then(response => {
+      ans = response.data
+    })
+    .catch(error => console.log(`Error: ${error}`));
+  }
+
+  if(ans) {
+    res.send({
+      success: ans,
+    })
+  }
+  else {
+    res.status(404).send({
+      success: ans,
+      message: `Datos inválidos`,
+    })
+  }
+
+}));
+
+/*
+Petición para obtener todos los sobregiros solicitados/realizados por una cuenta
+*/
+app.post('/clients/overdraft/getAll', asyncMiddleware(async (req, res, next) => {
+
+  let ans = null
+  const  expToken  = req.cookies['jwt'] || null;
+
+  let cuenta = getCuenta(expToken);
+  let header = headerConfig(expToken);
+
+  if(header && cuenta) {
+
+    await axios.post(urlBack + '/user/overdraft/consult',
+    JSON.stringify({
+      num_cuenta: cuenta,
+    }),
+    { headers: { Authorization: header } })
+    .then(response => {
+      ans = response.data
+    })
+    .catch(error => console.log(`Error: ${error}`));
+  }
+
+  if(ans) {
+    res.send({
+      success: ans,
+    })
+  }
+  else {
+    res.status(404).send({
+      success: null,
+      message: `Datos inválidos`,
+    })
+  }
+
+}));
+
+/*
+Petición para crear un sobregiro
+Parámetros body: saldo -> Saldo solicitado en el sobregiro
+
+*/
+app.post('/clients/overdraft/new', asyncMiddleware(async (req, res, next) => {
+
+  const { saldo } = req.body;
+
+  let ans = null
+  const  expToken  = req.cookies['jwt'] || null;
+
+  let cuenta = getCuenta(expToken);
+  let header = headerConfig(expToken);
+
+  if(header && cuenta && saldo) {
+
+    await axios.post(urlBack + '/user/overdraft/new',
+    JSON.stringify({
+      num_cuenta: cuenta,
+      saldo: saldo
+    }),
+    { headers: { Authorization: header } })
+    .then(response => {
+      ans = response.data
+    })
+    .catch(error => console.log(`Error: ${error}`));
+  }
+
+  if(ans) {
+    res.send({
+      success: ans,
+    })
+  }
+  else {
+    res.status(404).send({
+      success: null,
+      message: `Datos inválidos`,
+    })
+  }
+
+}));
+
+/*
+Petición para crear una nueva transacción
+Parámetros body: cuenta_destino -> Número de la cuenta destino
+                 banco_destino -> Nombre del banco al que pertenece la cuenta destino
+                 saldo -> Monto de la transacción
+
+*/
+app.post('/clients/transactions/new', asyncMiddleware(async (req, res, next) => {
+
+  const { cuenta_destino, banco_destino, saldo } = req.body;
+
+  let ans = null
+  const  expToken  = req.cookies['jwt'] || null;
+
+  let cuenta = getCuenta(expToken);
+  let header = headerConfig(expToken);
+
+  if(header && cuenta && saldo) {
+
+    await axios.post(urlBack + '/user/transaction/new',
+    JSON.stringify({
+      origen: cuenta,
+      destino: cuenta_destino,
+      banco_destino: banco_destino,
+      saldo: saldo
+    }),
+    { headers: { Authorization: header } })
+    .then(response => {
+      ans = response.data
+    })
+    .catch(error => console.log(`Error: ${error}`));
+  }
+
+  if(ans) {
+    res.send({
+      success: ans,
+    })
+  }
+  else {
+    res.status(404).send({
+      success: null,
       message: `Datos inválidos`,
     })
   }

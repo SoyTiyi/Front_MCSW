@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios'
 import { Container, Row, Button, Title } from './StyleAddUser';
 import RequestService from './../../services/RequestService';
+import { tiposUsuario }  from './../listas/TablesInfo';
+import DropDownInput  from './../listas/DropDownInput';
 
 const AddUser = (props) => {
   const [document, setDocument] = useState("");
@@ -9,8 +10,6 @@ const AddUser = (props) => {
   const [usuario, setUsuario] = useState("");
   const [nombre, setNombre] = useState("null");
   const [tipo, setTipo] = useState("cliente");
-
-  const pathList = props.location.pathname.split('/');
 
   const postAddUser = props => {
 
@@ -48,7 +47,7 @@ const AddUser = (props) => {
         <Row>
           <label><b>Tipo </b></label>
           <br /><br />
-          <input type="text" id="tipo" onChange={event => setTipo(event.target.value)} style={{ width:"100%" }}/>
+          <DropDownInput values={tiposUsuario} name="usuariosTipo" currentValue={tipo} setChange={setTipo} divStyle={{width: '100%'}} />
         </Row>
         <Row>
           <label><b>Nombre </b></label>

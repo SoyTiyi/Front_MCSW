@@ -3,12 +3,13 @@ import styled from 'styled-components'
 export const Container = styled.div`
   position: absolute;
   left: 50%;
-  top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   border: 1px solid #6b705c;
   border-radius: 10px;
-  text-align: left;
+  margin-top: 10%;
+  width: 20%;
+
 `;
 
 export const Row = styled.div`
@@ -34,5 +35,5 @@ export const Button = styled.button`
 
 export const Title = styled.div`
     text-align: center;
-    margin-top: 10vh;
+    margin-top: 5vh;
 `;

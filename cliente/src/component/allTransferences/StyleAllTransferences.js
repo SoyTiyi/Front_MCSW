@@ -14,6 +14,19 @@ export const Container = styled.div`
     margin-top: 20%;
 `;
 
+export const OpersContainer = styled.div`
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: 1px solid #6b705c;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    margin-top: 22%;
+`;
+
+
 export const Row = styled.div`
     display: block;
     margin: 10px 15px;

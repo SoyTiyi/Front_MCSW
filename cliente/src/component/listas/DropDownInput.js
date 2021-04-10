@@ -12,7 +12,7 @@ const DropDownInput = (props) => {
     <div>
       <Select
         native
-        style={{width: '100%'}}
+        style={props.divStyle}
         value={props.currentValue}
         onChange={event => props.setChange(event.target.value)}
         inputProps={{

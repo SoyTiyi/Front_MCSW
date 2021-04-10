@@ -1,12 +1,12 @@
 import UserAccount from './../component/userAccount/UserAccount';
 import AddUser from './../component/addUser/AddUser';
 import Transference from './../component/transference/Transference';
-import AllSuccesfullTransferences from './../component/allTransferences/AllTransferences';
+import AllTransferences from './../component/allTransferences/AllTransferences';
 import ListAllUserMoves from './../component/allTransferences/ListAllUserMoves';
 import ModifyMoney from './../component/modifyMoney/ModifyMoney';
 import Sobregiro from './../component/sobregiro/Sobregiro';
 import UpdateSobregiro from './../component/updateSobregiro/UpdateSobregiro';
-import AllTransferences from './../component/oficialAllTransference/OficialAllTransference';
+import AllOperations from './../component/allTransferences/AllOperations';
 import ConsultSobregiro from './../component/consultSobregiro/ConsultSobregiro';
 import CrearSobregiro from './../component/crearSobregiro/CrearSobregiro';
 import UserView from './../component/Views/UserView';
@@ -15,73 +15,63 @@ import AuditorView from './../component/Views/AuditorView';
 
 export const routes = [
   {
-    path: "/summary",
-    component: UserAccount,
-    roles: ['cliente'],
-  },
-  {
-    path: "/admin/users/new",
-    component: AddUser,
-    roles: ['admin'],
-  },
-  {
-    path: "/newTransference",
-    component: Transference,
-    roles: ['cliente'],
-  },
-  {
-    path: "/allSuccesfulTransference",
-    component: AllSuccesfullTransferences,
-    roles: ['admin', 'auditor'],
-  },
-  {
-    path: "/allTransference",
-    component: AllTransferences,
-    roles: ['admin', 'auditor'],
-  },
-  {
-    path: "/admin/users/modifyBalance",
-    component: ModifyMoney,
-    roles: ['admin'],
-  },
-  {
-    path: "/overdraft",
-    component: Sobregiro,
-    roles: ['cliente'],
-  },
-  {
-    path: "/updateOverdraft",
-    component: UpdateSobregiro,
-    roles: ['admin'],
-  },
-  {
-    path: "/consultOverdraft",
-    component: ConsultSobregiro,
-    roles: ['cliente'],
-  },
-  {
-    path: "createOverdraft",
-    component: CrearSobregiro,
-    roles: ['cliente'],
-  },
-  {
-    path: "/user",
-    component: UserView,
-    roles: ['cliente'],
-  },
-  {
-    path: "/admin",
+    path: "/MiBanco/admin",
     component: AdminView,
     roles: ['admin'],
   },
   {
-    path: "/auditor",
-    component: AuditorView,
-    roles: ['auditor']
+    path: "/MiBanco/users/new",
+    component: AddUser,
+    roles: ['admin'],
   },
   {
-    path: "/usersOpers",
+    path: "/MiBanco/clients/modifyBalance",
+    component: ModifyMoney,
+    roles: ['admin'],
+  },
+  {
+    path: "/MiBanco/clients/overdrafts/update/state",
+    component: UpdateSobregiro,
+    roles: ['admin'],
+  },
+  {
+    path: "/MiBanco/clients/operations",
     component: ListAllUserMoves,
     roles: ['admin', 'auditor'],
+  },
+  {
+    path: "/MiBanco/user",
+    component: UserView,
+    roles: ['cliente'],
+  },
+  {
+    path: "/MiBanco/client/operations/transactions",
+    component: AllTransferences,
+    roles: ['cliente'],
+  },
+  {
+    path: "/MiBanco/client/operations",
+    component: AllOperations,
+    roles: ['cliente'],
+  },
+  {
+    path: "/MiBanco/client/summary/balance",
+    component: UserAccount,
+    roles: ['cliente'],
+  },
+  {
+    path: "/MiBanco/client/overdrafts",
+    component: Sobregiro,
+    roles: ['cliente'],
+  },
+  {
+    path: "/MiBanco/client/transference/new",
+    component: Transference,
+    roles: ['cliente'],
+  },
+  {
+    path: "/MiBanco/auditor",
+    component: AuditorView,
+    roles: ['auditor']
   }
 ];

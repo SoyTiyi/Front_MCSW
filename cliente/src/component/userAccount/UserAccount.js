@@ -2,42 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Title } from './StyleUserAcount';
 import { Container, Button, Row } from '../login/StyleLogin';
 import axios from 'axios';
+import RequestService from './../../services/RequestService';
 
 const UserAccount = props => {
 
     const [saldo, setSaldo] = useState("");
-    const api = axios.create({baseURL: 'http://localhost:8000'})
-    let balance = <p>Loading.....</p>;
-
-      const componentDidMountSaldo = async (cuenta) => {
-
-        console.log(window.localStorage.getItem("username"));
-
-        var data = new FormData();
-        data.append('num_cuenta', cuenta);
-
-
-        const res = await axios.post('http://localhost:8000/user.php/clients/getBalance', data);
-        setSaldo(res.data);
-      };
 
     useEffect(() => {
       const componentDidMount = async () => {
 
-        var data = new FormData();
-        data.append('usuario', window.localStorage.getItem("username"));
-
-        const res = await axios.post('http://localhost:8000/user.php/clients/getAccount', data);
-        componentDidMountSaldo(res.data);
+        await RequestService.post("/clients/user/balance", null)
+        .then(response => {
+          if (!response.ok) {
+            return
+          }
+          return response
+        })
+        .then(response => response.json())
+        .then(data => {
+          setSaldo(data.success)
+        })
       };
       componentDidMount();
     }, []);
 
-
-    console.log("entre");
     return (
         <Container>
-            <form action="http://localhost:8000/user.php/clients/getBalance" method="post">
+            <form>
                 <Title>
                     <h1>Saldo total</h1>
                 </Title>

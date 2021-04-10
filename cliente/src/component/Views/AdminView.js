@@ -8,21 +8,19 @@ const AdminView = () => {
 	const history = useHistory();
 
 	const redirigir = cases => {
-		let path = "";
+		let path = "/MiBanco/";
+
 		if (cases === 'crearUsuario') {
-			path = '/admin/users/new';
+			path += 'users/new';
 		}
 		else if (cases === 'modDinero') {
-			path = '/admin/users/modifyBalance';
+			path += 'clients/modifyBalance';
 		}
 		else if (cases === 'autorizarSobre') {
-			path = '/updateOverdraft';
+			path += 'clients/overdrafts/update/state';
 		}
 		else if (cases === 'listarMovs') {
-			path = '/usersOpers';
-		}
-		else if (cases === 'crearSobregiro') {
-			path = '/createOverdraft';
+			path += 'clients/operations';
 		}
 
 		history.push(path);
@@ -35,7 +33,6 @@ const AdminView = () => {
 				<Button onClick={() => redirigir('modDinero')}>Modificar dinero de un usuario</Button>
 				<Button onClick={() => redirigir('autorizarSobre')}>Autorizar Sobregiro</Button>
 				<Button onClick={() => redirigir('listarMovs')}>Listar Movimientos</Button>
-				<Button onClick={() => redirigir('crearSobregiro')}>Crear Sobregiro</Button>
 			</ListButtons>
 		</Container>
 	);

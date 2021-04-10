@@ -8,7 +8,7 @@ export const Login = (props) => {
 
 
   const url = 'http://localhost:3000';
-  
+
   const history = useHistory();
 
   const[username, setUsername] = useState("");
@@ -37,7 +37,7 @@ export const Login = (props) => {
         path = 'user';
       }
 
-      history.push('/'+path);
+      history.push('/MiBanco/'+path);
     });
   }
 
