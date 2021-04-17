@@ -36,12 +36,12 @@ const CrearSobregiro = () => {
       <Row>
         <label><b>Numero de cuenta </b></label>
         <br /><br />
-        <input type="text" name="num_cuenta" onChange={event => setCuenta(event.target.value)} style={{ width:"100%" }}/>
+        <input type="text" name="num_cuenta" maxLength="15" onChange={event => setCuenta(event.target.value)} style={{ width:"100%" }}/>
       </Row>
       <Row>
         <label><b>Saldo </b></label>
         <br /><br />
-        <input type="text" name="saldo" onChange={event => setSaldo(event.target.value)} style={{ width:"100%" }}/>
+        <input type="text" name="saldo" maxLength="10" onChange={event => setSaldo(event.target.value)} style={{ width:"100%" }}/>
       </Row>
       <Buttons>
         <Button type="submit" onClick={post}>Crear</Button>

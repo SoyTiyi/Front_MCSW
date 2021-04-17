@@ -12,7 +12,7 @@ const Register = () => {
                 </Title>
                 <Row>
                     <label>Documento: </label>
-                    <input type="text" name="documento"/>
+                    <input type="text" maxLength="10" name="documento"/>
                 </Row>
                 <Button type="submit">Submit</Button>
             </form>

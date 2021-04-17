@@ -36,12 +36,12 @@ const ModifyMoney = () => {
       <Row>
         <label><b>Cuenta </b></label>
         <br /><br />
-        <input type="text" onChange={event => setCuenta(event.target.value)} style={{ width:"100%" }}/>
+        <input type="text" maxLength="15" onChange={event => setCuenta(event.target.value)} style={{ width:"100%" }}/>
       </Row>
       <Row>
         <label><b>Nuevo saldo </b></label>
         <br /><br />
-        <input type="text" onChange={event => setNewValor(event.target.value)} style={{ width:"100%" }}/>
+        <input type="text" maxLength="10" onChange={event => setNewValor(event.target.value)} style={{ width:"100%" }}/>
       </Row>
       <Button onClick={changeAmount}>Change</Button>
     </Container>

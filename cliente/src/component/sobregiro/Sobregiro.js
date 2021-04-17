@@ -84,7 +84,7 @@ const Sobregiro = () => {
           <Row>
             <label><b>Saldo </b></label>
             <br /><br />
-            <input type="text" name="saldo" onChange={event => setSaldo(event.target.value)} style={{ width:"100%" }}/>
+            <input type="text" maxLength="10" name="saldo" onChange={event => setSaldo(event.target.value)} style={{ width:"100%" }}/>
           </Row>
           <Buttons>
             <Button onClick={post}>Enviar</Button>

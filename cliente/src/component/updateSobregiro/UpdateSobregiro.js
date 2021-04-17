@@ -79,7 +79,7 @@ const UpdateSobregiro = () => {
         <Row>
           <label><b>Id de sobregiro </b></label>
           <br /><br />
-          <input type="text" name="id" onChange={event => setIdSobregiro(event.target.value)} style={{ width:"100%" }}/>
+          <input type="text" name="id" maxLength="15" onChange={event => setIdSobregiro(event.target.value)} style={{ width:"100%" }}/>
         </Row>
         <Row>
           <label><b>Nuevo estado de sobregiro </b></label>
@@ -89,7 +89,7 @@ const UpdateSobregiro = () => {
         <Row>
           <label><b>Porcentaje </b></label>
           <br /><br />
-          <input type="number" name="porcentaje" onChange={event => setPorcentaje(event.target.value)} style={{ width:"100%" }}/>
+          <input type="number" name="porcentaje" maxLength="10" onChange={event => setPorcentaje(event.target.value)} style={{ width:"100%" }}/>
         </Row>
         <Buttons>
           <Button type="submit" onClick={postUpdate}>Cambiar</Button>

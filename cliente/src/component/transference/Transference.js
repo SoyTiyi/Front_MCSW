@@ -43,7 +43,7 @@ const Transference = () => {
       <Row>
         <label><b>Cuenta destino  </b></label>
         <br /><br />
-        <input type="text" id="destino" onChange={event => setDestino(event.target.value)} style={{ width:"98%" }}/>
+        <input type="text" id="destino" maxLength="15" onChange={event => setDestino(event.target.value)} style={{ width:"98%" }}/>
       </Row>
       <Row>
         <label><b>Banco </b></label>
@@ -53,7 +53,7 @@ const Transference = () => {
       <Row>
         <label><b>Monto </b></label>
           <br /><br />
-        <input type="text" id="monto" onChange={event => setMonto(event.target.value)} style={{ width:"98%" }}/>
+        <input type="text" id="monto" maxLength="10" onChange={event => setMonto(event.target.value)} style={{ width:"98%" }}/>
       </Row>
       <Button type="button" onClick={postTransaction} >Enviar</Button>
     </Container>

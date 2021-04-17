@@ -20,7 +20,7 @@ const ConsultSobregiro = () => {
                 </Title>
                 <Row>
                     <label>Estado: </label>
-                    <input type="text" name="state"/>
+                    <input type="text" name="state" maxLength="10"/>
                 </Row>
                 <Button type="submit">Consult</Button>
             </form>
