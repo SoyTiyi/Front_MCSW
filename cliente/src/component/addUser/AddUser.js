@@ -13,6 +13,11 @@ const AddUser = (props) => {
 
   const postAddUser = props => {
 
+    if(password.length < 8){
+      alert('La contraseña debe tener una longitud mayor/igual a 8');
+      return;
+    }
+
     let reqBody = `documento=${document}&nombre=${nombre}&usuario=${usuario}&passwd=${password}&tipo=${tipo}`
 
     RequestService.post("/users/add", reqBody)
@@ -29,13 +34,6 @@ const AddUser = (props) => {
         alert(JSON.stringify(data.success))
         window.location.reload(false);
       })
-
-    const maxLengthCheck = e => {
-      if (e.target.value.length > e.target.maxLength) {
-        e.target.value = e.target.value.slice(0, e.target.maxLength)
-      }
-    }
-
   }
 
   return (
