@@ -2,13 +2,20 @@
 
 ## Requisitos
 
-1. Instala npm y nodejs
+**1.** Instalar npm y nodejs
 
-### Recursos
+**Versiones**
+
+npm: 6.14.4
+
+nodejs: v10.19.0
+
+**Recursos**
 
 [https://nodejs.org/es/download/package-manager/](https://nodejs.org/es/download/package-manager/)
 
 **Linux mint:** [https://linuxhint.com/install_npm_linux_mint/](https://linuxhint.com/install_npm_linux_mint/) 
+
 
 ## Run
 
@@ -26,7 +33,7 @@
     npm i
     npm start
 
-`http://localhost:3001`
+`http://localhost:3001/MiBanco`
 
 
 # Back
