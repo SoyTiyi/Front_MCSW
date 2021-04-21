@@ -7,8 +7,6 @@ import ModifyMoney from './../component/modifyMoney/ModifyMoney';
 import Sobregiro from './../component/sobregiro/Sobregiro';
 import UpdateSobregiro from './../component/updateSobregiro/UpdateSobregiro';
 import AllOperations from './../component/allTransferences/AllOperations';
-import ConsultSobregiro from './../component/consultSobregiro/ConsultSobregiro';
-import CrearSobregiro from './../component/crearSobregiro/CrearSobregiro';
 import UserView from './../component/Views/UserView';
 import AdminView from './../component/Views/AdminView';
 import AuditorView from './../component/Views/AuditorView';

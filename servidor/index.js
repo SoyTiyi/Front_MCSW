@@ -11,6 +11,7 @@ const cors = require('cors')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
+const validator = require('validator');
 
 const urlBack = 'http://localhost:8001/MiBanco';
 
@@ -152,6 +153,101 @@ const getCuenta = ( expToken ) => {
 }
 
 /*
+Verifica que una cadena sólo tenga números
+Parámetros: value -> Valor a verificar
+*/
+const validStringNumber = (value) => {
+  return value.match(/^[0-9]+$/) != null;
+}
+
+/*
+Verifica que el documento de identidad de un usuario sea válido
+Parámetros: documento -> Número de documento del usuario
+*/
+const validDocument = (doc) => {
+  return validStringNumber(doc) && doc.length >= 8 && doc.length <= 64;
+}
+
+/*
+Verifica que el nombre de usuario de un usuario sea válido
+Parámetros: user -> Número de usuario
+*/
+const validUsername = (user) => {
+  if(user.length >= 6 && user.length <= 15) {
+    return true
+  }
+  return false
+}
+
+/*
+Verifica la seguridad de la contraseña de un usuario
+Parámetros: passwd -> Contraseña del usuario
+*/
+const validPasswd = (passwd) => {
+
+  if (validator.isStrongPassword(passwd, {
+    maxLength: 64, minLength: 8, minLowercase: 1,
+    minUppercase: 1, minNumbers: 1, minSymbols: 1
+  })) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+/************************************************************************************************************************************/
+
+/*
+Petición para registrar un nuevo usuario en la aplicación
+Parámetros body: documento -> Número de documento del usuario
+                 usuario -> Nombre de usuario
+                 passwd -> Contraseña del usuario
+*/
+app.post('/signup', asyncMiddleware(async (req, res, next) => {
+
+  try{
+    const { documento, usuario, passwd } = req.body;
+
+    if(!validUsername(usuario) || !validPasswd(passwd) || !validDocument(documento)){
+      res.status(404).send({
+        success: false,
+        message: `Datos inválidos`,
+      })
+      return
+    }
+
+    let exist = false;
+
+    await axios.post(urlBack + '/signup',
+    JSON.stringify({
+      documento: documento,
+      usuario: usuario,
+      passwd: passwd
+    }))
+    .then(response => {
+
+      if(response.data){
+        exist=response.data;
+      }
+    })
+    .catch(error => console.log(`Error: ${error}`));
+
+    res.send({
+      success: exist
+    })
+  }
+
+  catch(e){
+    console.log(e)
+    res.status(404).send({
+      success: false,
+      message: `Datos inválidos`,
+    })
+  }
+}));
+
+/*
 Petición para el manejo de inicio de sesión de un usuario
 Parḿetros body: username -> Nombre de usuario
 passwd -> Contraseña del usuario
@@ -256,6 +352,14 @@ app.post('/users/add', asyncMiddleware(async (req, res, next) => {
 
   const { documento, nombre, usuario, passwd, tipo } = req.body;
 
+  if(!validUsername(usuario) || !validPasswd(passwd) || (documento && !validDocument(documento))) {
+    res.status(404).send({
+      success: false,
+      message: `Datos inválidos`,
+    })
+    return
+  }
+
   let ans = null
   const  expToken  = req.cookies['jwt'] || null;
 
@@ -341,7 +445,7 @@ Petición para obtener todos los sobregiros que han sido creados
 */
 app.post('/overdraft/getAll', asyncMiddleware(async (req, res, next) => {
 
-  let ans = null
+  let ans = []
   const  expToken  = req.cookies['jwt'] || null;
 
   let usuario = getUsuario(expToken);
@@ -367,7 +471,7 @@ app.post('/overdraft/getAll', asyncMiddleware(async (req, res, next) => {
   }
   else {
     res.status(404).send({
-      success: false,
+      success: [],
       message: `Datos inválidos`,
     })
   }
@@ -426,7 +530,7 @@ Petición para obtener todas las transacciones de los usuarios del banco
 */
 app.post('/clients/transactiones/getAll', asyncMiddleware(async (req, res, next) => {
 
-  let ans = null
+  let ans = []
   const  expToken  = req.cookies['jwt'] || null;
 
   let usuario = getUsuario(expToken);
@@ -452,7 +556,7 @@ app.post('/clients/transactiones/getAll', asyncMiddleware(async (req, res, next)
   }
   else {
     res.status(404).send({
-      success: false,
+      success: [],
       message: `Datos inválidos`,
     })
   }
@@ -492,7 +596,7 @@ Petición para obtener todas las operaciones de un usuario (las transacciones qu
 */
 app.post('/clients/user/operations/transactions', asyncMiddleware(async (req, res, next) => {
 
-  let ans = null
+  let ans = []
   const  expToken  = req.cookies['jwt'] || null;
 
   let usuario = getUsuario(expToken);
@@ -518,7 +622,7 @@ app.post('/clients/user/operations/transactions', asyncMiddleware(async (req, re
   }
   else {
     res.status(404).send({
-      success: false,
+      success: [],
       message: `Datos inválidos`,
     })
   }
@@ -530,7 +634,7 @@ Petición para obtener todas las operaciones de un usuario (las transacciones qu
 */
 app.post('/clients/user/operations', asyncMiddleware(async (req, res, next) => {
 
-  let ans = null
+  let ans = []
   const  expToken  = req.cookies['jwt'] || null;
 
   let usuario = getUsuario(expToken);
@@ -556,7 +660,7 @@ app.post('/clients/user/operations', asyncMiddleware(async (req, res, next) => {
   }
   else {
     res.status(404).send({
-      success: false,
+      success: [],
       message: `Datos inválidos`,
     })
   }
@@ -606,7 +710,7 @@ Petición para obtener todos los sobregiros solicitados/realizados por una cuent
 */
 app.post('/clients/overdraft/getAll', asyncMiddleware(async (req, res, next) => {
 
-  let ans = null
+  let ans = []
   const  expToken  = req.cookies['jwt'] || null;
 
   let cuenta = getCuenta(expToken);
@@ -632,7 +736,7 @@ app.post('/clients/overdraft/getAll', asyncMiddleware(async (req, res, next) => 
   }
   else {
     res.status(404).send({
-      success: null,
+      success: [],
       message: `Datos inválidos`,
     })
   }

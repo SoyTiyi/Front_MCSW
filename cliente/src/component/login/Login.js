@@ -5,10 +5,6 @@ import AuthService from "../../services/AuthService";
 
 export const Login = (props) => {
 
-
-
-  const url = 'http://localhost:3000';
-
   const history = useHistory();
 
   const[username, setUsername] = useState("");
@@ -47,12 +43,12 @@ export const Login = (props) => {
         <h1>Login</h1>
       </Title>
       <Row>
-        <label><b>Username </b></label>
+        <label><b>Usuario </b></label>
         <br /><br />
         <input type="text" name="username" onChange={event => setUsername(event.target.value)}  style={{ width:"100%" }}/>
       </Row>
       <Row>
-        <label><b>Password </b></label>
+        <label><b>Contraseña </b></label>
         <br /><br />
         <input type="password" name="pasword" onChange={event => setPassword(event.target.value)}  style={{ width:"100%" }}/>
       </Row>

@@ -13,8 +13,8 @@ const protectedElements = routes.map((route, i) =>
 function App() {
   return (
     <Switch>
-      <Route path="/" component={Login} exact />
-      <Route path="/register" component={Register} />
+      <Route path="/MiBanco" component={Login} exact />
+      <Route path="/MiBanco/register" component={Register} />
       {protectedElements}
       <Route path="*" component={() => "404 NOT FOUND"} />
     </Switch>

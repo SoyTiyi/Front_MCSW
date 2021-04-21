@@ -10,7 +10,7 @@ export default function PrivateRoute(props) {
 
 
   useEffect(() => {
-    
+
     const fetchData = async () => {
       const result = await authService.isAuthenticated(props.roles);
       setValidUser(result);
@@ -32,7 +32,7 @@ export default function PrivateRoute(props) {
         ) : (
           <Redirect
             to={{
-              pathname: "/",
+              pathname: "/MiBanco",
 
             }}
             />
