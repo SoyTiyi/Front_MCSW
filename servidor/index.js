@@ -20,7 +20,7 @@ const SECRET_KEY = 'secret!'
 const app = express()
 
 const corsOptions = {
-  origin: 'http://localhost:3001',
+  origin: 'https://mibanco-banca.herokuapp.com',
   credentials: true
 }
 
@@ -75,6 +75,7 @@ app.use(cors(corsOptions))
 app.use(cookieParser())
 server.applyMiddleware({ app, cors: false })
 app.use(express.urlencoded({extended: true}))
+
 
 /*
 Función para obtener la cabecera con el token del back (para poder hacer peticiones)
@@ -300,8 +301,8 @@ app.post('/login', asyncMiddleware(async (req, res, next) => {
   res.cookie('jwt', encriptedInfo, {
     httpOnly: true,
     maxAge: 600000,
-    //secure: true, //on HTTPS
-    //domain: 'example.com', //set domain
+    secure: true,
+    sameSite: 'none'
   })
 
   res.send({

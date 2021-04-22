@@ -2,8 +2,8 @@ import React from 'react';
 import {setHeaderOptions} from './RequestHeader';
 
 const axios = require('axios').default;
-const URL = 'http://localhost:3000';
-/*const URL = 'http://localhost:8080/api/auth';*/
+//const URL = 'http://localhost:3000';
+const URL = 'https://mibanco-back.herokuapp.com';
 
 const getExpireUser = async (reqBody) => {
 

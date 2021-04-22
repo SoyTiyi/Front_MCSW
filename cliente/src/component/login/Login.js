@@ -32,7 +32,7 @@ export const Login = (props) => {
       else if(userRol === 'cliente'){
         path = 'user';
       }
-
+      console.log(JSON.stringify(path))
       history.push('/MiBanco/'+path);
     });
   }

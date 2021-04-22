@@ -1,7 +1,8 @@
 import React from 'react';
 import {setHeaderOptions} from './RequestHeader';
 
-const URL = 'http://localhost:3000';
+//const URL = 'http://localhost:3000';
+const URL = 'https://mibanco-back.herokuapp.com';
 
 class RequestService {
 
