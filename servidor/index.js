@@ -13,7 +13,7 @@ const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const validator = require('validator');
 
-const urlBack = 'http://localhost:8001/MiBanco';
+const urlBack = 'https://immense-reef-34047.herokuapp.com/MiBanco';
 
 const SECRET_KEY = 'secret!'
 
@@ -833,7 +833,7 @@ app.post('/clients/transactions/new', asyncMiddleware(async (req, res, next) => 
 
 }));
 
-app.listen(3000, () =>
+app.listen(process.env.PORT || 3000, () =>
 console.log(
   `🔥🔥🔥 GraphQL + Express auth tutorial listening on port 3000!`,
 ),
