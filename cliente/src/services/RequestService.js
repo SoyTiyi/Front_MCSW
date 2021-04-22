@@ -7,7 +7,7 @@ class RequestService {
 
   post(path, reqBody) {
     return fetch(URL+path, setHeaderOptions(reqBody))
-    
+
   }
 }
 

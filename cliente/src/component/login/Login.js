@@ -12,7 +12,7 @@ export const Login = (props) => {
 
 
   const routeChange = () => {
-    let path = '/register';
+    let path = '/MiBanco/register';
     history.push(path);
   }
 
